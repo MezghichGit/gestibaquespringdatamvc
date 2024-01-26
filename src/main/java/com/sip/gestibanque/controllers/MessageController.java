@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sip.gestibanque.entities.Banque;
 import com.sip.gestibanque.entities.CompteBancaire;
 import com.sip.gestibanque.entities.Message;
+import com.sip.gestibanque.entities.User;
 import com.sip.gestibanque.repositories.MessageRepository;
-
+import com.sip.gestibanque.repositories.UserRepository;
 @Controller
 @RequestMapping("/messages")
 public class MessageController {
@@ -38,17 +39,22 @@ public class MessageController {
 */
 	@Autowired // iOC(inversion of control) = Injection de dépendances
 	MessageRepository messageRepository;
+	@Autowired
+	UserRepository userRepository;
 	
 	@GetMapping("/save")
 	public String getFormNewMessage(Model model) {
 		Message message = new Message();
 		model.addAttribute("message", message);
+		List<User> users = (List<User>) this.userRepository.findAll();
+		model.addAttribute("users", users);
 		return "message/formulaireMessage";
 	}
 	
 	@PostMapping("/save")
 	public String saveMessage(Message message) {
 		message.setDateCreation(LocalDate.now());
+		message.setEmail(message.getUser().getEmail());
 		messageRepository.save(message);
 		return "redirect:list";
 	}

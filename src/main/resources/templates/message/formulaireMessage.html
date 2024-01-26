@@ -12,26 +12,28 @@
 	<header>
 		<h2 align="center" style="background-color: brown;">Création d'un nouveau message</h2>
 	</header>
-	<main>
-		<br/ >
-		<a style="justify-content: center;" class="btn btn-info" th:href="@{/messages/list}">Retour à la liste des messages</a>
-		<br/ >
-		<br/ >
-		
+	
+		<br />
+
 		<form method="post" th:action="@{/messages/save}" th:object="${message}">
+			<label for="ab">User</label>
+			<select class="form-control" th:field="*{user}" required>
+				<option value="">--</option>
+				<option th:each="user:${users}" th:text="${user.nom}" th:value="${user.id}"></option>
+			</select>
+			<br />
 			<label for="nb">Sujet</label>
-			<input id="nb" type="text" th:field="*{sujet}" placeholder="Sujet du mail" class="form-control" required/>
-			<br/ >
+			<input id="nb" type="text" th:field="*{sujet}" placeholder="Sujet du mail" class="form-control" required />
+			<br />
 			<label for="ab">Description</label>
-			<input id="ab" type="text" th:field="*{description}" placeholder="Corps du mail" class="form-control" required/>
-			<br/ >
-			<label for="ab">Email</label>
-			<input id="ab" type="email" th:field="*{email}" placeholder="Entrez votre adresse mail" class="form-control" required/>
-			<br/ >
-			<br/ >
+			<textarea cols="10" rows="6" th:field="*{description}" placeholder="Description de votre message"
+				class="form-control" required>
+
+			</textarea>
+			<br />
+
 			<input type="submit" value="Envoyer" class="btn btn-success" />
 		</form>
-	</main>
 </body>
 
 </html>

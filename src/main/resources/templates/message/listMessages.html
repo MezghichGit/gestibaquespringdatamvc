@@ -10,13 +10,12 @@
 	<div th:replace="fragments/header::header" />
 	<div th:replace="fragments/navbar::navbar" />
 	<header>
-		<a th:href="@{/home}" type="button" class="btn btn-outline-secondary">Home</a>
-		<br />
 		<h2 align="center" style="background-color: brown;">Liste des messages</h2>
 		<br/ >
 	</header>
-	<main>
-		
+	
+		<a th:href="@{/messages/save}" class="btn btn-primary">Ajouter</a>
+		<br/ ><br/ >
 		<form th:action="@{/messages/findByDate}" method="get">
 			<input type="search" name="date" />
 			<button type="submit">Rechercher</button>
@@ -28,6 +27,7 @@
 				<th>Description</th>
 				<th>Date</th>
 				<th>Email</th>
+				<th>Utilisateur</th>
 				<th>Modifier</th>
 				<th>Suppression</th>
 			</tr>
@@ -38,13 +38,12 @@
 				<td th:text="${message.description}"></td>
 				<td th:text="${message.dateCreation}"></td>
 				<td th:text="${message.email}"></td>
+				<td><span th:text="${message.user.prenom}"></span> <span th:text="${message.user.nom}"></span></td>
 				<td><a th:href="@{update/{id}(id=${message.id})}" class="btn btn-info">Modifier</a></td>
 				<td><a th:href="@{delete/{id}(id=${message.id})}" class="btn btn-danger">Supprimer</a></td>
 			</tr>
-
 		</table>
-		<a th:href="@{/messages/save}" class="btn btn-primary">Ajouter</a>
-	</main>
+		
 </body>
 
 </html>
