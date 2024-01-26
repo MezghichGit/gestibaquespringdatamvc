@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sip.gestibanque.entities.User;
 import com.sip.gestibanque.repositories.UserRepository;
+import com.sip.gestibanque.services.UserService;
 
 
 
@@ -24,6 +25,9 @@ public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/save")
 	public String getFormAdd(Model model)
@@ -36,7 +40,8 @@ public class UserController {
 	@PostMapping("/save")
 	public String save(User user)
 	{
-		userRepository.save(user); 
+		//userRepository.save(user); 
+		this.userService.saveUser(user);
 		return "redirect:list";
 	}
 	

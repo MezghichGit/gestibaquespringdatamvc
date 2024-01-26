@@ -19,6 +19,11 @@ public class Role {
 		return "Role [id=" + id + ", libelle=" + libelle + "]";
 	}
 
+	public Role(String libelle) {
+		super();
+		this.libelle = libelle;
+	}
+
 	public int getId() {
 		return id;
 	}
