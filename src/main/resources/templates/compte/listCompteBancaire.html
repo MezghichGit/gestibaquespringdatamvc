@@ -27,7 +27,7 @@
 			<th>Date de création du compte</th>
 			<th>Solde du compte</th>
 			<th>Type de compte</th>
-			<th>ID de la banque</th>
+			<th>Banque</th>
 			<th>Modifier</th>
 			<th>Supprimer</th>
 
@@ -38,7 +38,7 @@
 			<td th:text="${compte.dateCreation}"></td>
 			<td th:text="${compte.solde}"></td>
 			<td th:text="${compte.typeCompte}"></td>
-			<td th:text="${compte.idBanque}"></td>
+			<td th:text="${compte.banque.nom}"></td>
 			<td><a th:href="@{/compte/update/{id}(id=${compte.id})}" class="btn btn-warning">Modifier</a></td>
 			<td><a th:href="@{/compte/delete/{id}(id=${compte.id})}" class="btn btn-danger">Supprimer</a></td>
 		</tr>

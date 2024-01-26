@@ -11,24 +11,38 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sip.gestibanque.entities.Banque;
 import com.sip.gestibanque.entities.CompteBancaire;
 import com.sip.gestibanque.entities.User;
+import com.sip.gestibanque.repositories.BanqueRepository;
 import com.sip.gestibanque.repositories.CompteBancaireRepository;
 
 @Controller
 @RequestMapping("/compte")
 public class CompteBancaireController {
 
+	
+	private final CompteBancaireRepository cbRepo;
+
+	private final BanqueRepository banqueRepository;
+	
 	@Autowired
-	CompteBancaireRepository cbRepo;
+	public CompteBancaireController(CompteBancaireRepository cbRepo, BanqueRepository banqueRepository)
+	{
+		this.banqueRepository = banqueRepository;
+		this.cbRepo = cbRepo;
+	}
 	
 	@RequestMapping("/list")
+	//@ResponseBody
 	public String listCompteBancaire(Model model) {
 		
 		List<CompteBancaire> comptes = (List<CompteBancaire>) cbRepo.findAll();
 		model.addAttribute("comptes", comptes);
 		return "compte/listCompteBancaire";
+		//return comptes.toString();
 	}
 	
 	@GetMapping("/add")
@@ -36,14 +50,18 @@ public class CompteBancaireController {
 		
 		CompteBancaire cb = new CompteBancaire();
 		model.addAttribute("cb", cb);
+		List<Banque> banques = (List<Banque>) this.banqueRepository.findAll();
+		model.addAttribute("banques", banques);
 		return "compte/addCompteBancaire";
 	}
 	
 	@PostMapping("/add")
+	//@ResponseBody
 	public String saveCompteBancaire(CompteBancaire cb) {
 		
 		cbRepo.save(cb);
 		return "redirect:list";
+		//return cb.toString();
 	}
 	
 	@GetMapping("/delete/{id}")

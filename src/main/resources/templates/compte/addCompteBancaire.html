@@ -23,9 +23,21 @@
 		<br />
 		<label for="num">Solde du compte</label> <input id="num" type="number" th:field="*{solde}" class="form-control" />
 		<br />
-		<label for="type">Type de compte</label> <input id="type" type="text" th:field="*{typeCompte}" class="form-control" />
+		<label for="type">Type de compte</label> 
+	
+		
+		<select th:field="*{typeCompte}" class="form-control">
+			<option value="">--</option>
+  			<option th:each="typecompte:${T(com.sip.gestibanque.entities.TypeCompte).values()}" th:value="${typecompte}" th:text="${typecompte}">
+  			</option>
+		</select>
+		
 		<br />
-		<label for="idBanque">ID de la banque</label> <input id="idBanque" type="text" th:field="*{idBanque}" class="form-control" />
+		<select class="form-control" th:field="*{banque}">
+			<option value="">--</option>
+			<option th:each="banque:${banques}" th:text="${banque.nom}" th:value="${banque.id}"></option>
+		</select>
+		
 		<br />
 		<input type="submit" value="Ajouter" class="btn btn-primary"/>
 	</form>

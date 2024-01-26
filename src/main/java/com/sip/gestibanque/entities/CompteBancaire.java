@@ -2,10 +2,16 @@ package com.sip.gestibanque.entities;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class CompteBancaire {
@@ -17,26 +23,49 @@ public class CompteBancaire {
 	private String proprietaire;
 	private LocalDate dateCreation;
 	private double solde;
-	private String typeCompte;
-	private int idBanque;
+	private TypeCompte typeCompte;
 	
-	public CompteBancaire() {
+	/**** Many To One ****/
 	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "banque_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+	private Banque banque;
+	
+	public Banque getBanque() {
+		return banque;
 	}
 
-	public CompteBancaire(String proprietaire, LocalDate dateCreation, double solde, String typeCompte, int idBanque) {
+
+	public void setBanque(Banque banque) {
+		this.banque = banque;
+	}
+
+
+	public CompteBancaire(int id, String proprietaire, LocalDate dateCreation, double solde, TypeCompte typeCompte,
+			Banque banque) {
+		super();
+		this.id = id;
 		this.proprietaire = proprietaire;
 		this.dateCreation = dateCreation;
 		this.solde = solde;
 		this.typeCompte = typeCompte;
-		this.idBanque = idBanque;
+		this.banque = banque;
 	}
+
+
+	public CompteBancaire() {
+	
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "CompteBancaire [id=" + id + ", proprietaire=" + proprietaire + ", dateCreation=" + dateCreation
-				+ ", solde=" + solde + ", typeCompte=" + typeCompte + ", idBanque=" + idBanque + "]";
+				+ ", solde=" + solde + ", typeCompte=" + typeCompte + ", banque=" + banque + "]";
 	}
+
 
 	public int getId() {
 		return id;
@@ -70,20 +99,13 @@ public class CompteBancaire {
 		this.solde = solde;
 	}
 
-	public String getTypeCompte() {
+	public TypeCompte getTypeCompte() {
 		return typeCompte;
 	}
 
-	public void setTypeCompte(String typeCompte) {
+	public void setTypeCompte(TypeCompte typeCompte) {
 		this.typeCompte = typeCompte;
 	}
 
-	public int getIdBanque() {
-		return idBanque;
-	}
-
-	public void setIdBanque(int idBanque) {
-		this.idBanque = idBanque;
-	}
 	
 }
