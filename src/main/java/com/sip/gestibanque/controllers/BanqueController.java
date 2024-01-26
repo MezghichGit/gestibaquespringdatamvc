@@ -50,8 +50,11 @@ public class BanqueController {
 	{
 		List<Banque> banques = (List<Banque>) banqueRepository.findAll();  // select *
 		model.addAttribute("banques", banques);
+		//System.out.println(banques);
 		//return banques.toString();
+		//return banques.get(0).getCompteBancaires().toString();
 		return "banque/listBanque";
+	
 	}
 	
 	@GetMapping("/delete/{id}")
@@ -93,5 +96,15 @@ public class BanqueController {
 		return "banque/listBanque";
 	}
 	
+	@GetMapping("/comptesBancaires/{id}")
+	public String compteBancaireBanque(@PathVariable("id") int id, Model model)
+	{
+		Optional<Banque> opBanque = banqueRepository.findById(id);
+		Banque banque = opBanque.get();
+		List<CompteBancaire> comptesBanque = banque.getCompteBancaires();
+		model.addAttribute("banque", banque);
+		model.addAttribute("comptesBanque", comptesBanque);
+		return "banque/comptesBanque";
+	}
 
 }

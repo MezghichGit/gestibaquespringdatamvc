@@ -29,6 +29,7 @@ Pour ajouter une nouvelle banque clique ici : <a class="btn btn-primary" th:href
 		<th>Nom Banque</th>
 		<th>Capital Banque</th>
 		<th>Adresse Banque</th>
+		<th>Comptes</th>
 		<th>Supprimer</th>
 		<th>Modifier</th>
 	</tr>
@@ -37,6 +38,7 @@ Pour ajouter une nouvelle banque clique ici : <a class="btn btn-primary" th:href
 		<td th:text="${banque.nom}"></td>
 		<td th:text="${banque.capital}"></td>
 		<td th:text="${banque.adresse}"></td>
+		<td><a th:href="@{/banques/comptesBancaires/{id}(id=${banque.id})}" class="btn btn-info">Comptes Banque</a></td>
 		<td><a th:href="@{/banques/delete/{id}(id=${banque.id})}" class="btn btn-danger">Supprimer</a></td>
 		<td><a th:href="@{/banques/update/{id}(id=${banque.id})}" class="btn btn-warning">Modifier</a></td>
 	</tr>
